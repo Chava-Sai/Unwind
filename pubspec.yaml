@@ -45,7 +45,7 @@ dependencies:
   http: any
   firebase_auth: ^4.3.0
   firebase_core: ^2.8.0
-  sliding_up_panel: ^2.0.0+1
+  sliding_up_panel: ^1.0.3
 
 dev_dependencies:
   flutter_test:

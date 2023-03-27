@@ -4,6 +4,7 @@ import 'package:test1/chat/basicchat.dart';
 import 'package:test1/login/login.dart';
 import 'package:test1/login/register.dart';
 import 'package:flutter/widgets.dart';
+import 'package:test1/scroll.dart';
 
 
 void main() async {
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
         'login' : (context) => LoginPage(),
         'register' : (context) => MyRegister(),
         'chat' : (context) => ChatApp(),
+        'scroll' : (context) => ScrollPage(),
       },
     );
   }

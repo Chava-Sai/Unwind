@@ -140,7 +140,7 @@ class _LoginPageState extends State<LoginPage> {
                             child: IconButton(
                               color: Colors.white,
                               icon: Icon(Icons.arrow_forward),
-                              onPressed: () {Navigator.pushNamed(context, 'chat');},
+                              onPressed: () {Navigator.pushNamed(context, 'scroll');},
                             ),
                           ),
                       ),

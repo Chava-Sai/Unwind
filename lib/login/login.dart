@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_login_facebook/flutter_login_facebook.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:test1/scroll.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -50,10 +52,18 @@ class _LoginPageState extends State<LoginPage> {
           ),
         ),
         Container(
-          padding: EdgeInsets.only(left: 35 , top: 160),
+          padding: EdgeInsets.only(
+            left: MediaQuery.of(context).size.width*0.05,
+            top: MediaQuery.of(context).size.width*0.45,
+          ),
           child: const Text(
             "Welcome\nBack",
-            style: TextStyle(fontFamily: 'OoohBaby',color: Colors.white , fontSize: 33,decoration: TextDecoration.none),
+            style: TextStyle(
+              fontFamily: 'OoohBaby',
+              color: Colors.white,
+              fontSize: 33,
+              decoration: TextDecoration.none,
+            ),
           ),
         ),
         Scaffold(
@@ -140,7 +150,17 @@ class _LoginPageState extends State<LoginPage> {
                             child: IconButton(
                               color: Colors.white,
                               icon: Icon(Icons.arrow_forward),
-                              onPressed: () {Navigator.pushNamed(context, 'scroll');},
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  PageTransition(
+                                    type: PageTransitionType.bottomToTop,
+                                    child: ScrollPage(),
+                                    duration: Duration(milliseconds: 200),
+                                  ),
+                                );
+
+                              },
                             ),
                           ),
                       ),

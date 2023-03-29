@@ -1,6 +1,10 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:http/http.dart' as http;
+import 'package:test1/login/login.dart';
+import '../scroll.dart';
 import 'model.dart';
 
 
@@ -76,12 +80,23 @@ class _ChatPageState extends State<ChatPage> {
           padding: EdgeInsets.all(8.0),
           child: Text(
             "UnWind",
-            maxLines: 2,
+            maxLines: 1,
             textAlign: TextAlign.center,
           ),
         ),
         backgroundColor: botBackgroundColor,
+        iconTheme: IconThemeData(
+          color: Colors.white,
+        ),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Get.back();
+          },
+        ),
       ),
+
+
       backgroundColor: backgroundColor,
       body: SafeArea(
         child: Column(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-
 import 'chat/basicchat.dart';
 
 class ScrollPage extends StatefulWidget {
@@ -13,43 +14,46 @@ class _ScrollPageState extends State<ScrollPage> {
 
   @override
   Widget build(BuildContext context) {
-    final panelHeightClosed = MediaQuery.of(context).size.height * 0.05;
+    final panelHeightClosed = MediaQuery.of(context).size.height * 0.07;
     final panelHeightOpen = MediaQuery.of(context).size.height * 1.0;
-    return Stack(
-      children: [
-        Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('Assets/image/back.jpg'),
-              fit: BoxFit.cover,
-              colorFilter: ColorFilter.mode(
-                Colors.white.withOpacity(_imageOpacity),
-                BlendMode.dstATop,
+    return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Stack(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('Assets/image/back.jpg'),
+                fit: BoxFit.cover,
+                colorFilter: ColorFilter.mode(
+                  Colors.white.withOpacity(_imageOpacity),
+                  BlendMode.dstATop,
+                ),
               ),
             ),
           ),
-        ),
-        Scaffold(
-          backgroundColor: Colors.transparent,
-          body: SlidingUpPanel(
-            onPanelSlide: (double slideOffset) {
-              final imageOpacity = 1 - slideOffset / 1.5;
-              if (mounted) {
-                setState(() {
-                  _imageOpacity = imageOpacity;
-                });
-              }
-            },
-            minHeight: panelHeightClosed,
-            maxHeight: panelHeightOpen,
-            color: Colors.transparent,
-            panelBuilder: (scrollController) => _buildPanel(scrollController),
-            borderRadius: BorderRadius.vertical(top: Radius.circular(18)),
-            parallaxEnabled: true,
-            parallaxOffset: .5,
+          Scaffold(
+            backgroundColor: Colors.transparent,
+            body: SlidingUpPanel(
+              onPanelSlide: (double slideOffset) {
+                final imageOpacity = 1 - slideOffset / 1.5;
+                if (mounted) {
+                  setState(() {
+                    _imageOpacity = imageOpacity;
+                  });
+                }
+              },
+              minHeight: panelHeightClosed,
+              maxHeight: panelHeightOpen,
+              color: Colors.transparent,
+              panelBuilder: (scrollController) => _buildPanel(scrollController),
+              borderRadius: BorderRadius.vertical(top: Radius.circular(18)),
+              parallaxEnabled: true,
+              parallaxOffset: .5,
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -74,8 +78,7 @@ class _ScrollPageState extends State<ScrollPage> {
                   if (index == 0) {
                     return GestureDetector(
                         onTap: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => ChatPage(), fullscreenDialog: true,),
-                          );
+                          Get.to(() => ChatApp() , transition: Transition.rightToLeft);
                         },
                         child: Hero(
                           tag: 'chat',
@@ -96,8 +99,7 @@ class _ScrollPageState extends State<ScrollPage> {
                                       flex: 5,
                                       child: Container(
                                         width:
-                                            MediaQuery.of(context).size.width *
-                                                0.3,
+                                            MediaQuery.of(context).size.width * 0.3,
                                         decoration: BoxDecoration(
                                           borderRadius: BorderRadius.only(
                                             topLeft: Radius.circular(10),

@@ -45,10 +45,11 @@ dependencies:
   http: any
   firebase_auth: ^4.3.0
   firebase_core: ^2.8.0
-  hover: ^0.4.0
   sliding_up_panel: ^2.0.0+1
   get: ^4.6.5
   page_transition: ^2.0.9
+  liquid_swipe: ^3.1.0
+  flutter_svg: ^2.0.5
 
 dev_dependencies:
   flutter_test:

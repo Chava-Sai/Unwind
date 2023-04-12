@@ -154,9 +154,9 @@ class _LoginPageState extends State<LoginPage> {
                                 Navigator.push(
                                   context,
                                   PageTransition(
-                                    type: PageTransitionType.bottomToTop,
-                                    child: ScrollPage(),
-                                    duration: Duration(milliseconds: 200),
+                                    type: PageTransitionType.rightToLeft,
+                                    child: MyLiquidSwipe(),
+                                    duration: Duration(milliseconds: 500),
                                   ),
                                 );
 

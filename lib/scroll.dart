@@ -1,81 +1,201 @@
-
-
 import 'package:flutter/material.dart';
-import 'package:liquid_swipe/liquid_swipe.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
+import 'package:test1/screens/chat_screen.dart';
 
-class MyLiquidSwipe extends StatelessWidget {
-  final pages = [
-    Container(
-      color: Colors.blue,
-      child: Stack(
+class ScrollPage extends StatefulWidget {
+  @override
+  _ScrollPageState createState() => _ScrollPageState();
+}
+
+class _ScrollPageState extends State<ScrollPage> {
+  double _imageOpacity = 1.0;
+
+  @override
+  Widget build(BuildContext context) {
+    final panelHeightClosed = MediaQuery.of(context).size.height * 0.07;
+    final panelHeightOpen = MediaQuery.of(context).size.height * 1.0;
+    return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Stack(
         children: [
-          Positioned(
-            top: 20, // Update the top offset using MediaQuery
-            left: 85, // Update the left offset using MediaQuery
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                SvgPicture.asset(
-                  'Assets/image/signup.svg', // Replace with your SVG image asset path
-                  height: 250,
-                  width: 200,
+          Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('Assets/image/back.jpg'),
+                fit: BoxFit.cover,
+                colorFilter: ColorFilter.mode(
+                  Colors.white,
+                  BlendMode.dstATop,
                 ),
-                SizedBox(height: 16.0),
-              ],
+              ),
+            ),
+          ),
+          Scaffold(
+            backgroundColor: Colors.transparent,
+            body: SlidingUpPanel(
+              onPanelSlide: (double slideOffset) {
+                final imageOpacity = 1 - slideOffset / 1.5;
+                if (mounted) {
+                  setState(() {
+                    _imageOpacity = imageOpacity;
+                  });
+                }
+              },
+              minHeight: panelHeightClosed,
+              maxHeight: panelHeightOpen,
+              color: Colors.transparent,
+              panelBuilder: (scrollController) => _buildPanel(scrollController),
+              borderRadius: BorderRadius.vertical(top: Radius.circular(18)),
+              parallaxEnabled: true,
+              parallaxOffset: .5,
             ),
           ),
         ],
       ),
-    ),
-
-    // Rest of the pages...
-
-    Container(
-      color: Colors.green,
-      child: Center(
-        child: Text(
-          'Page 2',
-          style: TextStyle(color: Colors.white, fontSize: 24.0),
-        ),
-      ),
-    ),
-    Container(
-      color: Colors.orange,
-      child: Center(
-        child: Text(
-          'Page 3',
-          style: TextStyle(color: Colors.white, fontSize: 24.0),
-        ),
-      ),
-    ),
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: LiquidSwipe(
-        pages: pages,
-        fullTransitionValue: 500,
-        slideIconWidget: Icon(Icons.arrow_back_ios),
-        positionSlideIcon: 0.8,
-      ),
     );
   }
-}
 
-class CustomHalfCircleClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    Path path = Path();
-    path.moveTo(0, 0);
-    path.lineTo(0, size.height);
-    path.quadraticBezierTo(size.width / 2, size.height * 0.002, size.width, size.height);
-    path.lineTo(size.width, 0);
-    path.close();
-    return path;
-  }
+  Widget _buildPanel(ScrollController scrollController) => Container(
+    padding: EdgeInsets.symmetric(horizontal: 24),
+    child: CustomScrollView(
+      controller: scrollController,
+      slivers: [
+        SliverToBoxAdapter(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 16),
+              buildHeader(),
+              SizedBox(height: 18),
+            ],
+          ),
+        ),
+        SliverList(
+          delegate: SliverChildBuilderDelegate(
+                (BuildContext context, int index) {
+              if (index == 0) {
+                return GestureDetector(
+                    onTap: () {
+                      Get.to(() => ChatScreen() , transition: Transition.rightToLeft);
+                    },
+                    child: Hero(
+                      tag: 'chat',
+                      child: MouseRegion(
+                        cursor: SystemMouseCursors.click,
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 10, bottom: 20, right: 10),
+                          child: Container(
+                            height: MediaQuery.of(context).size.height * 0.2,
+                            width: MediaQuery.of(context).size.width,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.grey.withOpacity(0.3),
+                            ),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  flex: 5,
+                                  child: Container(
+                                    width:
+                                    MediaQuery.of(context).size.width * 0.3,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(10),
+                                        bottomLeft: Radius.circular(10),
+                                      ),
+                                      image: DecorationImage(
+                                        image: AssetImage(
+                                            'Assets/image/chatbot-1.png'),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 4,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.only(
+                                        topRight: Radius.circular(10),
+                                        bottomRight: Radius.circular(10),
+                                      ),
+                                      image: DecorationImage(
+                                        image: AssetImage(
+                                            'Assets/image/chatbot-2.png'),
+                                        fit: BoxFit.cover,
+                                        colorFilter: ColorFilter.mode(
+                                          Colors.white.withOpacity(0.9),
+                                          BlendMode.dstATop,
+                                        ),
+                                      ),
+                                    ),
+                                    width:
+                                    MediaQuery.of(context).size.width *
+                                        0.7,
+                                    child: Padding(
+                                      padding:
+                                      const EdgeInsets.only(left: 28),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            'CHAT',
+                                            style: TextStyle(
+                                              fontSize: 40,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ));
+              } else {
+                return Padding(
+                  padding: EdgeInsets.only(left: 10, bottom: 20, right: 10),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.grey.withOpacity(0.3),
+                    ),
+                    height: MediaQuery.of(context).size.height * 0.2,
+                    width: MediaQuery.of(context).size.width,
+                  ),
+                );
+              }
+            },
+            childCount: 4,
+          ),
+        ),
+      ],
+    ),
+  );
 
-  @override
-  bool shouldReclip(covariant CustomClipper<Path> oldClipper) => false;
+  Widget buildHeader() => Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Center(
+        child: InkWell(
+          onTap: () => {},
+          child: Icon(
+            Icons.keyboard_arrow_up,
+            size: 32,
+            color: Colors.white,
+          ),
+        ),
+      ),
+      SizedBox(height: 10),
+    ],
+  );
 }

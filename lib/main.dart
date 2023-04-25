@@ -1,10 +1,15 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:test1/chat/basicchat.dart';
+import 'package:provider/provider.dart';
 import 'package:test1/login/login.dart';
 import 'package:test1/login/register.dart';
 import 'package:flutter/widgets.dart';
+import 'package:test1/providers/chats_provider.dart';
+import 'package:test1/providers/models_provider.dart';
+import 'package:test1/screens/chat_screen.dart';
 import 'package:test1/scroll.dart';
+
+import 'constants/constants.dart';
 
 
 void main() async {
@@ -22,15 +27,25 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      initialRoute: 'scroll',
-      routes: {
-        'login' : (context) => LoginPage(),
-        'register' : (context) => MyRegister(),
-        'chat' : (context) => ChatApp(),
-        'scroll' : (context) => MyLiquidSwipe(),
-      },
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => ModelsProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => ChatProvider(),
+        ),
+      ],
+      child: MaterialApp(
+        title: 'Flutter ChatBOT',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+            scaffoldBackgroundColor: scaffoldBackgroundColor,
+            appBarTheme: AppBarTheme(
+              color: cardColor,
+            )),
+        home: LoginPage(),
+      ),
     );
   }
 }

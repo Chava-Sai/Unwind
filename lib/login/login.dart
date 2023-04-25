@@ -155,7 +155,7 @@ class _LoginPageState extends State<LoginPage> {
                                   context,
                                   PageTransition(
                                     type: PageTransitionType.rightToLeft,
-                                    child: MyLiquidSwipe(),
+                                    child: ScrollPage(),
                                     duration: Duration(milliseconds: 500),
                                   ),
                                 );

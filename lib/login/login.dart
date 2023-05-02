@@ -18,6 +18,17 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 
+Future<void> _loginWithGoogle() async {
+  GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+  GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+  AuthCredential credential = GoogleAuthProvider.credential(
+    accessToken: googleAuth?.accessToken,
+    idToken: googleAuth?.idToken,
+  );
+  UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
+  print(userCredential.user?.displayName);
+}
+
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   String? _username;
@@ -126,7 +137,7 @@ class _LoginPageState extends State<LoginPage> {
                         Row(
                           children: [
                             GestureDetector(
-                              onTap: (){},
+                              onTap: _loginWithGoogle,
                               child: Image.asset(
                                 'Assets/image/google.png',
                                 width: 48.0,

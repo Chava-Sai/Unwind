@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "403944478838",
+    "project_id": "unwind-test",
+    "storage_bucket": "unwind-test.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:403944478838:android:b08287aa7a2b2cd31d6757",
+        "android_client_info": {
+          "package_name": "com.example.test1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "403944478838-5b5k4k7j65do68okr1edgtjftcv2igt1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA83lBV2vV1GVfL5A_0LVFE6Dk083bj8-M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "403944478838-5b5k4k7j65do68okr1edgtjftcv2igt1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,6 +1,8 @@
 import 'dart:developer';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 
 import '../constants/constants.dart';
@@ -64,13 +66,9 @@ class _ChatScreenState extends State<ChatScreen> {
             icon: const Icon(Icons.more_vert_rounded, color: Colors.white),
           ),
           IconButton(
-            onPressed: () {
-              Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(builder: (context) => LoginPage()),
-                    (route) => false,
-              );
-
+            onPressed: () async {
+              await GoogleSignIn().signOut();
+              FirebaseAuth.instance.signOut();
             },
             icon: const Icon(Icons.logout, color: Colors.white),
           ),

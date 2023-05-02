@@ -1,8 +1,8 @@
 import 'dart:math';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:test1/screens/chat_screen.dart';
+import 'package:test1/scroll.dart';
 
 import 'failure.dart';
 import 'login.dart';
@@ -21,13 +21,13 @@ class AuthenticationRepository extends GetxController {
   }
 
   _setInitialScreen(User? user) {
-    user == null ? Get.offAll(() => LoginPage()) : Get.offAll(() => ChatScreen());
+    user == null ? Get.offAll(() => LoginPage()) : Get.offAll(() => ScrollPage());
   }
 
   Future<void> createUserWithEmailAndPassword(String email , String password) async {
     try {
       await _auth.createUserWithEmailAndPassword(email: email, password: password);
-      firebaseUser.value != null ? Get.offAll(() => ChatScreen()) : Get.to(() => LoginPage());
+      firebaseUser.value != null ? Get.offAll(() => ScrollPage()) : Get.to(() => LoginPage());
     } on FirebaseAuthException catch(e){
       final ex =  SignUpWithEmailAndPassFailure.code(e.code);
       print('FireBase Auth Exception - ${ex.message}');

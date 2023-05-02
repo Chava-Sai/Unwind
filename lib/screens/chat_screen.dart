@@ -4,6 +4,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 
 import '../constants/constants.dart';
+import '../login/login.dart';
 import '../providers/chats_provider.dart';
 import '../providers/models_provider.dart';
 import '../services/assets_manager.dart';
@@ -62,9 +63,21 @@ class _ChatScreenState extends State<ChatScreen> {
             },
             icon: const Icon(Icons.more_vert_rounded, color: Colors.white),
           ),
+          IconButton(
+            onPressed: () {
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => LoginPage()),
+                    (route) => false,
+              );
+
+            },
+            icon: const Icon(Icons.logout, color: Colors.white),
+          ),
         ],
       ),
-      body: SafeArea(
+
+        body: SafeArea(
         child: Column(
           children: [
             Flexible(

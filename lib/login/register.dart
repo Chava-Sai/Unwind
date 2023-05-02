@@ -1,7 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:test1/login/signup_controller.dart';
+import 'login.dart';
 
 
 class MyRegister extends StatefulWidget {
@@ -10,30 +13,19 @@ class MyRegister extends StatefulWidget {
   @override
   State<MyRegister> createState() => _MyRegisterState();
 }
-Future<void> _loginWithGoogle() async {
-  try {
-    final googleSignIn = GoogleSignIn();
-    final googleUser = await googleSignIn.signIn();
-    // TODO: Handle the signed-in user
-  } catch (e) {
-    // TODO: Handle the sign-in error
-    print('Error signing in with Google: $e');
-  }
-}
 
 class _MyRegisterState extends State<MyRegister> {
   final _formKey = GlobalKey<FormState>();
-  String? _username;
-  String? _password;
+  String? _fullname;
   String? _email;
-  String? _repassword;
-  final _usernameController = TextEditingController();
-  final _passwordController = TextEditingController();
-  final _emailController = TextEditingController();
-  final _repasswordController = TextEditingController();
+  String? _phonenumber;
+  String? _password;
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(SignUpController());
+    final _formkey = GlobalKey<FormState>();
+
     return Stack(
       children: [
         Container(
@@ -59,9 +51,10 @@ class _MyRegisterState extends State<MyRegister> {
               child: Container(
                 padding: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.29,right: 35,left: 35),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextFormField(
-                      controller: _usernameController,
+                      controller: controller.username,
                       decoration: InputDecoration(
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
@@ -75,18 +68,19 @@ class _MyRegisterState extends State<MyRegister> {
                         labelStyle: TextStyle(fontWeight: FontWeight.bold),
                         contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 10),
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide(color: Colors.white)
                         ),
                       ),
                       validator: (value) =>
-                      value!.isEmpty ? 'Please enter your username' : null,
+                      value!.isEmpty ? 'Please enter your Email' : null,
                       onSaved: (value) {
-                        _username = value;
+                        _fullname = value;
                       },
                     ),
                     SizedBox(height: 30),
                     TextFormField(
-                      controller: _emailController,
+                      controller: controller.email,
                       decoration: InputDecoration(
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
@@ -100,7 +94,8 @@ class _MyRegisterState extends State<MyRegister> {
                         labelStyle: TextStyle(fontWeight: FontWeight.bold),
                         contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 10),
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide(color: Colors.white)
                         ),
                       ),
                       validator: (value) =>
@@ -111,7 +106,33 @@ class _MyRegisterState extends State<MyRegister> {
                     ),
                     SizedBox(height: 30),
                     TextFormField(
-                      controller: _passwordController,
+                      controller: controller.phone,
+                      decoration: InputDecoration(
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide(color: Colors.black),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                        label: Text('Phone Number'),
+                        labelStyle: TextStyle(fontWeight: FontWeight.bold),
+                        contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide(color: Colors.white)
+                        ),
+                      ),
+                      validator: (value) =>
+                      value!.isEmpty ? 'Please enter your Email' : null,
+                      onSaved: (value) {
+                        _phonenumber = value;
+                      },
+                    ),
+                    SizedBox(height: 30),
+                    TextFormField(
+                      controller: controller.password,
                       obscureText: true,
                       decoration: InputDecoration(
                         focusedBorder: OutlineInputBorder(
@@ -122,104 +143,49 @@ class _MyRegisterState extends State<MyRegister> {
                           borderRadius: BorderRadius.circular(10),
                           borderSide: BorderSide(color: Colors.white),
                         ),
-                        labelText:'Password',
+                        labelText: 'Password',
                         labelStyle: TextStyle(fontWeight: FontWeight.bold),
                         contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 10),
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide(color: Colors.white)
                         ),
                       ),
                       validator: (value) =>
-                      value!.isEmpty ? 'Please enter your password' : null,
+                      value!.isEmpty ? 'Please enter your Password' : null,
                       onSaved: (value) {
                         _password = value;
                       },
                     ),
                     SizedBox(height: 30),
-                    TextFormField(
-                      controller: _repasswordController,
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.black),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.white),
-                        ),
-                        labelText: 'Confirm Password',
-                        labelStyle: TextStyle(fontWeight: FontWeight.bold),
-                        contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.white)
-                        ),
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          if(_formKey.currentState!.validate() ){
+                            SignUpController.instance.registerUser(controller.email.text.trim(), controller.password.text.trim());
+                          }
+                        },
+                        child: Text('SignUp'),
                       ),
-                      validator: (value) =>
-                      value!.isEmpty ? 'Please Re-enter your password' : null,
-                      onSaved: (value) {
-                        _repassword = value;
-                      },
                     ),
                     SizedBox(height: 30),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          child: CircleAvatar(
-                            radius: 30,
-                            backgroundColor: Color(0xff4c505b),
-                            child: TextButton(
-                              onPressed: () {Navigator.pushNamed(context, 'login');}, child: Text('Go',style: TextStyle(color: Colors.white , fontSize: 20) ,),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 70,),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            GestureDetector(
-                              onTap: _loginWithGoogle,
-                              child: Image.asset(
-                                'Assets/image/google.png',
-                                width: 48.0,
-                                height: 48.0,
-                              ),
-                            ),
-                            SizedBox(width: 15,),
-                            GestureDetector(
-                              onTap: (){},
-                              child: Image.asset(
-                                'Assets/image/facebook.png',
-                                width: 40.0,
-                                height: 40.0,
-                              ),
-                            ),
-                            SizedBox(width: 20,),
-                            GestureDetector(
-                              onTap: (){},
-                              child: Image.asset(
-                                'Assets/image/apple.png',
-                                width: 40.0,
-                                height: 40.0,
-                              ),
-                            ),
-                          ],
-                        ),
-                        TextButton(onPressed: (){ Navigator.pushNamed(context, 'login');}, child: Text('Sign In',style: TextStyle(decoration: TextDecoration.underline , fontSize: 18,color: Colors.lightBlue),)),
-                       // TextButton(onPressed: (){}, child: Text('Forgot Password',style: TextStyle(decoration: TextDecoration.underline , fontSize: 18,color: Color(0xff4c505b)),)),
-                      ],
-                    ),
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () {Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => LoginPage()));},
+                        child: Text('Login'),
+                      ),
+                    )
                   ],
+
                 ),
               ),
             ),
-          ),)
+          ),
+        ),
       ],
     );
   }

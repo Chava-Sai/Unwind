@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
+import 'package:test1/login/login.dart';
 import 'package:test1/screens/chat_screen.dart';
 
 class ScrollPage extends StatefulWidget {
@@ -16,7 +17,7 @@ class _ScrollPageState extends State<ScrollPage> {
   Widget build(BuildContext context) {
     final panelHeightClosed = MediaQuery.of(context).size.height * 0.07;
     final panelHeightOpen = MediaQuery.of(context).size.height * 1.0;
-    return GetMaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Stack(
         children: [

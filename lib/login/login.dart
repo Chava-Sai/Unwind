@@ -9,8 +9,6 @@ import 'package:test1/login/register.dart';
 import 'package:test1/screens/chat_screen.dart';
 import 'package:test1/scroll.dart';
 
-
-
 bool _obscureText = true;
 
 class LoginPage extends StatefulWidget {
@@ -25,7 +23,8 @@ Future<void> _loginWithGoogle() async {
     accessToken: googleAuth?.accessToken,
     idToken: googleAuth?.idToken,
   );
-  UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
+  UserCredential userCredential =
+      await FirebaseAuth.instance.signInWithCredential(credential);
   print(userCredential.user?.displayName);
 }
 
@@ -72,7 +71,7 @@ class _LoginPageState extends State<LoginPage> {
         ),
         Scaffold(
           backgroundColor:
-          Colors.transparent, // Set the background color to transparent
+              Colors.transparent, // Set the background color to transparent
           body: Form(
             key: _formKey,
             child: SingleChildScrollView(
@@ -94,7 +93,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                       validator: (value) =>
-                      value!.isEmpty ? 'Please enter your username' : null,
+                          value!.isEmpty ? 'Please enter your username' : null,
                       onSaved: (value) {
                         _username = value;
                       },
@@ -125,7 +124,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                       validator: (value) =>
-                      value!.isEmpty ? 'Please enter your password' : null,
+                          value!.isEmpty ? 'Please enter your password' : null,
                       onSaved: (value) {
                         _password = value;
                       },
@@ -139,12 +138,14 @@ class _LoginPageState extends State<LoginPage> {
                             GestureDetector(
                               onTap: _loginWithGoogle,
                               child: Image.asset(
-                                'Assets/image/google.png',
+                                'Assets/image/facebook.png',
                                 width: 48.0,
                                 height: 48.0,
                               ),
                             ),
-                            SizedBox(width: 15,),
+                            SizedBox(
+                              width: 15,
+                            ),
                             // GestureDetector(
                             //   onTap: (){},
                             //   child: Image.asset(
@@ -176,8 +177,8 @@ class _LoginPageState extends State<LoginPage> {
                                   _formKey.currentState!.save();
                                   try {
                                     UserCredential userCredential =
-                                    await FirebaseAuth.instance
-                                        .signInWithEmailAndPassword(
+                                        await FirebaseAuth.instance
+                                            .signInWithEmailAndPassword(
                                       email: _username!,
                                       password: _password!,
                                     );

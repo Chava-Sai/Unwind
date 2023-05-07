@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:test1/login/signup_controller.dart';
 import 'login.dart';
 
@@ -12,6 +14,17 @@ class MyRegister extends StatefulWidget {
 
   @override
   State<MyRegister> createState() => _MyRegisterState();
+}
+
+Future<void> _loginWithGoogle() async {
+  GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+  GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+  AuthCredential credential = GoogleAuthProvider.credential(
+    accessToken: googleAuth?.accessToken,
+    idToken: googleAuth?.idToken,
+  );
+  UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
+  print(userCredential.user?.displayName);
 }
 
 class _MyRegisterState extends State<MyRegister> {
@@ -56,46 +69,48 @@ class _MyRegisterState extends State<MyRegister> {
                     TextFormField(
                       controller: controller.username,
                       decoration: InputDecoration(
+                        prefixIcon: Icon(Icons.person_outline_rounded),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.black),
+                          borderSide: BorderSide(color: Colors.white),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.white),
+                          borderSide: BorderSide(color: Colors.black),
                         ),
                         labelText: 'Username',
                         labelStyle: TextStyle(fontWeight: FontWeight.bold),
                         contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 10),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(color: Colors.white)
+                            borderSide: BorderSide(color: Colors.black12)
                         ),
                       ),
                       validator: (value) =>
-                      value!.isEmpty ? 'Please enter your Email' : null,
+                      value!.isEmpty ? 'Please enter your UserName' : null,
                       onSaved: (value) {
                         _fullname = value;
                       },
                     ),
-                    SizedBox(height: 30),
+                    SizedBox(height: 40),
                     TextFormField(
                       controller: controller.email,
                       decoration: InputDecoration(
+                        prefixIcon: Icon(Icons.mail_outline),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.black),
+                          borderSide: BorderSide(color: Colors.white),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.white),
+                          borderSide: BorderSide(color: Colors.black),
                         ),
                         labelText: 'Email',
                         labelStyle: TextStyle(fontWeight: FontWeight.bold),
                         contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 10),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(color: Colors.white)
+                            borderSide: BorderSide(color: Colors.black12)
                         ),
                       ),
                       validator: (value) =>
@@ -104,51 +119,53 @@ class _MyRegisterState extends State<MyRegister> {
                         _email = value;
                       },
                     ),
-                    SizedBox(height: 30),
+                    SizedBox(height: 40),
                     TextFormField(
                       controller: controller.phone,
                       decoration: InputDecoration(
+                        prefixIcon: Icon(Icons.phone),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.black),
+                          borderSide: BorderSide(color: Colors.white),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.white),
+                          borderSide: BorderSide(color: Colors.black),
                         ),
                         label: Text('Phone Number'),
                         labelStyle: TextStyle(fontWeight: FontWeight.bold),
                         contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 10),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(color: Colors.white)
+                            borderSide: BorderSide(color: Colors.black12)
                         ),
                       ),
                       validator: (value) =>
-                      value!.isEmpty ? 'Please enter your Email' : null,
+                      value!.isEmpty ? 'Please enter your PhoneNumber' : null,
                       onSaved: (value) {
                         _phonenumber = value;
                       },
                     ),
-                    SizedBox(height: 30),
+                    SizedBox(height: 40),
                     TextFormField(
                       controller: controller.password,
                       obscureText: true,
                       decoration: InputDecoration(
+                        prefixIcon: Icon(Icons.lock_open),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.black),
+                          borderSide: BorderSide(color: Colors.white),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.white),
+                          borderSide: BorderSide(color: Colors.black),
                         ),
                         labelText: 'Password',
                         labelStyle: TextStyle(fontWeight: FontWeight.bold),
                         contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 10),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(color: Colors.white)
+                            borderSide: BorderSide(color: Colors.black12)
                         ),
                       ),
                       validator: (value) =>
@@ -157,27 +174,43 @@ class _MyRegisterState extends State<MyRegister> {
                         _password = value;
                       },
                     ),
-                    SizedBox(height: 30),
+                    SizedBox(height: 40),
                     SizedBox(
                       width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          if(_formKey.currentState!.validate() ){
-                            SignUpController.instance.registerUser(controller.email.text.trim(), controller.password.text.trim());
-                          }
-                        },
-                        child: Text('SignUp'),
+                      child: CircleAvatar(
+                        radius: 30,
+                        backgroundColor: Color(0xff4c505b),
+                        child: IconButton(
+                          color: Colors.white,
+                          icon: Icon(Icons.arrow_forward),
+                          onPressed: () {
+                                if(_formKey.currentState!.validate() ){
+                                     SignUpController.instance.registerUser(controller.email.text.trim(), controller.password.text.trim());
+                                 }
+                            }
+                        ),
                       ),
                     ),
-                    SizedBox(height: 30),
-                    SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: () {Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => LoginPage()));},
-                        child: Text('Login'),
-                      ),
+                    SizedBox(height: 90),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => LoginPage()));
+                            },
+                            child: Text(
+                              'Login',
+                              style: TextStyle(
+                                  decoration: TextDecoration.underline,
+                                  fontSize: 28,
+                                  color: Colors.black),
+                            )
+                        ),
+                      ],
                     )
                   ],
 

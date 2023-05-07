@@ -65,13 +65,6 @@ class _ChatScreenState extends State<ChatScreen> {
             },
             icon: const Icon(Icons.more_vert_rounded, color: Colors.white),
           ),
-          IconButton(
-            onPressed: () async {
-              await GoogleSignIn().signOut();
-              FirebaseAuth.instance.signOut();
-            },
-            icon: const Icon(Icons.logout, color: Colors.white),
-          ),
         ],
       ),
 
@@ -111,7 +104,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     Expanded(
                       child: TextField(
                         focusNode: focusNode,
-                        style: const TextStyle(color: Colors.white),
+                        style: const TextStyle(color: Colors.black),
                         controller: textEditingController,
                         onSubmitted: (value) async {
                           await sendMessageFCT(

@@ -145,23 +145,23 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                             ),
                             SizedBox(width: 15,),
-                            GestureDetector(
-                              onTap: (){},
-                              child: Image.asset(
-                                'Assets/image/facebook.png',
-                                width: 40.0,
-                                height: 40.0,
-                              ),
-                            ),
-                            SizedBox(width: 20,),
-                            GestureDetector(
-                              onTap: (){},
-                              child: Image.asset(
-                                'Assets/image/apple.png',
-                                width: 40.0,
-                                height: 40.0,
-                              ),
-                            ),
+                            // GestureDetector(
+                            //   onTap: (){},
+                            //   child: Image.asset(
+                            //     'Assets/image/facebook.png',
+                            //     width: 40.0,
+                            //     height: 40.0,
+                            //   ),
+                            // ),
+                            // SizedBox(width: 20,),
+                            // GestureDetector(
+                            //   onTap: (){},
+                            //   child: Image.asset(
+                            //     'Assets/image/apple.png',
+                            //     width: 40.0,
+                            //     height: 40.0,
+                            //   ),
+                            // ),
                           ],
                         ),
                         Container(

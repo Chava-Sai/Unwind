@@ -12,6 +12,7 @@ import 'package:test1/providers/chats_provider.dart';
 import 'package:test1/providers/models_provider.dart';
 import 'package:test1/screens/chat_screen.dart';
 import 'package:test1/scroll.dart';
+import 'package:test1/settings.dart';
 
 import 'constants/constants.dart';
 
@@ -29,12 +30,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+
         ChangeNotifierProvider(
           create: (_) => ModelsProvider(),
         ),
         ChangeNotifierProvider(
           create: (_) => ChatProvider(),
         ),
+        ChangeNotifierProvider(create: (_) => UserName()),
       ],
       child: GetMaterialApp(
         title: 'Flutter ChatBOT',

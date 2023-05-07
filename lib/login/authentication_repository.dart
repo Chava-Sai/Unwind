@@ -2,9 +2,7 @@ import 'dart:math';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:test1/login/verify_email.dart';
-import 'package:test1/screens/chat_screen.dart';
 import 'package:test1/scroll.dart';
-
 import 'failure.dart';
 import 'login.dart';
 

@@ -36,6 +36,7 @@ class _ResetScreenState extends State<ResetScreen> {
                 child: const Text(
                   "Forgot Password?",
                   style: TextStyle(
+                    color: Colors.black87,
                     fontSize: 30,
                     fontWeight: FontWeight.w700,
                   ),
@@ -102,7 +103,7 @@ class _ResetScreenState extends State<ResetScreen> {
                 children: [
                   Expanded(
                     child: MaterialButton(
-                      color: const Color(0xFF1E232C),
+                      color: Color(0xFF35C2C1),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
@@ -125,7 +126,7 @@ class _ResetScreenState extends State<ResetScreen> {
                 ],
               ),
             ),
-            const Spacer(flex: 10),
+            SizedBox(height: 20,),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

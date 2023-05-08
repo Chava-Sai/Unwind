@@ -43,10 +43,6 @@ class MyApp extends StatelessWidget {
         title: 'Flutter ChatBOT',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          scaffoldBackgroundColor: scaffoldBackgroundColor,
-          appBarTheme: AppBarTheme(
-            color: cardColor,
-          ),
         ),
         home: LoginPage(),
       ),

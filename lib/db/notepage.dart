@@ -41,17 +41,36 @@ class _NotesPageState extends State<NotesPage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(
-      title: Text(
-        'Notes',
-        style: TextStyle(fontSize: 24),
+    // appBar: AppBar(
+    //   shape: ContinuousRectangleBorder(
+    //     borderRadius: BorderRadius.only(
+    //       bottomLeft: Radius.circular(90),
+    //       bottomRight: Radius.circular(90),
+    //     ),
+    //   ),
+    //   toolbarHeight: 70.0,
+    //   title: Text(
+    //     'Notes',
+    //     style: TextStyle(fontSize: 24),
+    //   ),
+    // ),
+    body: SafeArea(
+
+      child: Stack(
+        children: [
+          Image.asset(
+            'Assets/image/chatback32.jpg',
+            fit: BoxFit.cover,
+            height: double.infinity,
+            width: double.infinity,
+          ),
+          Center(
+            child: isLoading
+                ? CircularProgressIndicator() : notes.isEmpty
+                ? Text('No Notes', style: TextStyle(color: Colors.white, fontSize: 24),) : buildNotes(),
+          ),
+        ],
       ),
-      actions: [Icon(Icons.search), SizedBox(width: 12)],
-    ),
-    body: Center(
-      child: isLoading
-          ? CircularProgressIndicator() : notes.isEmpty
-          ? Text('No Notes', style: TextStyle(color: Colors.white, fontSize: 24),) : buildNotes(),
     ),
     floatingActionButton: FloatingActionButton(
       backgroundColor: Colors.black,

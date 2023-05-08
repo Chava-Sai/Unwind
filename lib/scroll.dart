@@ -72,34 +72,77 @@ class _ScrollPageState extends State<ScrollPage> {
               elevation: 0,
               flexibleSpace: FlexibleSpaceBar(
                 centerTitle: true,
-                title: Text(
-                  "Hi $userName",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                title:
+                    Text(
+                      "Hi $userName",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 22.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+
               ),
             ),
+            body: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                SizedBox(height: 10,),
+                Container(
+                  // padding: EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+                  // decoration: BoxDecoration(
+                  //   color: Colors.grey.shade200,
+                  //   boxShadow: [
+                  //     BoxShadow(
+                  //       color: Colors.grey.shade500,
+                  //       blurRadius: 9,
+                  //       offset: Offset(0, 2),
+                  //     ),
+                  //   ],
+                  // ),
+                  child: RichText(
+                    textAlign: TextAlign.center,
+                    text: TextSpan(
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 19.0,
+                        fontStyle: FontStyle.italic,
+                      ),
+                      children: [
+                        TextSpan(
+                          text: "\"You are not your illness. You have an individual story to tell. You have a name, a history, a personality. Staying yourself is part of the battle.\"",
+                        ),
+                        TextSpan(
+                          text: " \n\t\t\t - Julian Seifter",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
 
-
-            body: SlidingUpPanel(
-              onPanelSlide: (double slideOffset) {
-                final imageOpacity = 1 - slideOffset / 1.5;
-                if (mounted) {
-                  setState(() {
-                    _imageOpacity = imageOpacity;
-                  });
-                }
-              },
-              minHeight: panelHeightClosed,
-              maxHeight: panelHeightOpen,
-              color: Colors.transparent,
-              panelBuilder: (scrollController) => _buildPanel(scrollController),
-              borderRadius: BorderRadius.vertical(top: Radius.circular(18)),
-              parallaxEnabled: true,
-              parallaxOffset: .5,
+                ),
+                Expanded(
+                  child: SlidingUpPanel(
+                    onPanelSlide: (double slideOffset) {
+                      final imageOpacity = 1 - slideOffset / 1.5;
+                      if (mounted) {
+                        setState(() {
+                          _imageOpacity = imageOpacity;
+                        });
+                      }
+                    },
+                    minHeight: panelHeightClosed,
+                    maxHeight: panelHeightOpen,
+                    color: Colors.transparent,
+                    panelBuilder: (scrollController) => _buildPanel(scrollController),
+                    borderRadius: BorderRadius.vertical(top: Radius.circular(18)),
+                    parallaxEnabled: true,
+                    parallaxOffset: .5,
+                  ),
+                ),
+              ],
             ),
             drawer: Drawer(
               width: 275,
@@ -148,13 +191,13 @@ class _ScrollPageState extends State<ScrollPage> {
                               const SizedBox(width: 12),
                               CircleAvatar(
                                 radius: 22,
-                                backgroundColor: Colors.white,
+                                backgroundColor: Colors.black,
                                 backgroundImage:
-                                    AssetImage('Assets/image/google.png'),
+                                    AssetImage('Assets/image/chatlogo.png'),
                               ),
                               const SizedBox(width: 12),
                               Text(
-                                'Srinivas Sai',
+                                '$userName',
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 22),
                               ),
@@ -396,7 +439,7 @@ class _ScrollPageState extends State<ScrollPage> {
                                                 Text(
                                                   'CHAT',
                                                   style: TextStyle(
-                                                    fontSize: 40,
+                                                    fontSize: 35,
                                                     fontWeight: FontWeight.bold,
                                                   ),
                                                 ),
@@ -458,7 +501,7 @@ class _ScrollPageState extends State<ScrollPage> {
                                   ),
                                   child: Padding(
                                     padding: const EdgeInsets.only(
-                                        top: 70, left: 20),
+                                        top: 60, left: 20),
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -466,7 +509,7 @@ class _ScrollPageState extends State<ScrollPage> {
                                         Text(
                                           'DIARY',
                                           style: TextStyle(
-                                            fontSize: 40,
+                                            fontSize: 35,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),

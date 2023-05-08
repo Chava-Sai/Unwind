@@ -138,7 +138,7 @@ class _LoginPageState extends State<LoginPage> {
                             GestureDetector(
                               onTap: _loginWithGoogle,
                               child: Image.asset(
-                                'Assets/image/facebook.png',
+                                'Assets/image/google.png',
                                 width: 48.0,
                                 height: 48.0,
                               ),

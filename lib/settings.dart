@@ -11,7 +11,6 @@ import 'confirm_dialogue.dart';
 import 'db/notes_database.dart';
 import 'login/login.dart';
 
-
 class Settings extends StatefulWidget {
   const Settings({Key? key}) : super(key: key);
 
@@ -45,7 +44,7 @@ class _SettingsState extends State<Settings> {
         title: Text(
           "Settings",
         ),
-        backgroundColor: Colors.indigo,
+        backgroundColor: Colors.black,
         shape: ContinuousRectangleBorder(
           borderRadius: BorderRadius.only(
             bottomLeft: Radius.circular(70),
@@ -150,7 +149,8 @@ class _SettingsState extends State<Settings> {
                       ),
                     );
                     if (name != null) {
-                      Provider.of<UserName>(context, listen: false).name = nameEditing;
+                      Provider.of<UserName>(context, listen: false).name =
+                          nameEditing;
                     }
                     //
                   },
@@ -198,11 +198,11 @@ class _SettingsState extends State<Settings> {
                           Navigator.of(context).pushAndRemoveUntil(
                               MaterialPageRoute(
                                   builder: (context) => LoginPage()),
-                                  (Route<dynamic> route) => false);
+                              (Route<dynamic> route) => false);
                         } on FirebaseAuthException catch (e) {
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                             content:
-                            Text(e.message ?? "Failed to delete account."),
+                                Text(e.message ?? "Failed to delete account."),
                           ));
                         }
                       }
@@ -239,27 +239,6 @@ class _SettingsState extends State<Settings> {
           ),
           SizedBox(
             height: 20.0,
-          ),
-          ElevatedButton(
-            onPressed: () async {
-              await GoogleSignIn().signOut();
-              FirebaseAuth.instance.signOut();
-            },
-            style: ElevatedButton.styleFrom(
-              primary: Colors.indigo,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8.0),
-              ),
-              padding: EdgeInsets.symmetric(horizontal: 32.0, vertical: 16.0),
-            ),
-            child: Text(
-              "Logout",
-              style: TextStyle(
-                fontSize: 20.0,
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
           ),
           SizedBox(
             height: 20.0,
